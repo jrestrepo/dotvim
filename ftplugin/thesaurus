@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# This searchs an online thesaurus, cuts as much cruft out as possible,
+# and displays the definitions.
+
+#URL='http://www.merriam-webster.com/thesaurus/'
+URL='http://thesaurus.com/browse/'
+
+# If -r just get the raw output, otherwise pass it through sed.
+if [ "$1" = "-r" ] ; then
+    	shift
+	$(readlink -e $(which elinks)) -dump -no-numbering "${URL}$2" 
+else
+    # Sed is doing many things: 
+    # Print out "no results found for " and quit. 
+    # Print out only the lines I'm interested in, which are:
+    #   No results found for
+    #   Main Entry:
+    #   Definition:
+    #   and all from Synonyms: to Antonyms:
+    # Put a new line after Antonyms.
+    $(readlink -e $(which elinks)) -dump -no-numbering "${URL}$1"  | sed -n -e '/No results found for/ { s|^[ \t]*\(No results .*\)|\1|p ; q} ;{/Main Entry:/p ; /Definition:/p ; /Synonyms:/,/\(Antonyms:\)\|\(^$\)/p} ; /Antonyms:/ a \  '
+fi
