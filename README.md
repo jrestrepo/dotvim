@@ -1,8 +1,8 @@
 Vim Config install file
 
 	Repository:
-		git clone git@github.com:jrestrepo/vimconf.git ~/.vim
-        	git clone https://github.com/jrestrepo/vimconf.git ~/.vim
+		git clone git@github.com:jrestrepo/dotvim.git ~/.vim
+        	git clone https://github.com/jrestrepo/dotvim.git ~/.vim
 
 	Create symlinks:
 		ln -s ~/.vim/vimrc ~/.vimrc
