@@ -61,3 +61,4 @@
 [submodule "Conque-Shell"]
 	path = Conque-Shell
 	url = https://github.com/oplatek/Conque-Shell.git
+    ignore = dirty
