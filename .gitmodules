@@ -58,3 +58,6 @@
 	path = bundle/surround
 	url = https://github.com/tpope/vim-surround.git
     ignore = dirty
+[submodule "Conque-Shell"]
+	path = Conque-Shell
+	url = https://github.com/oplatek/Conque-Shell.git
