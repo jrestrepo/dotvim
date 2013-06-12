@@ -151,11 +151,6 @@ autocmd Filetype tex	    :source ~/.vim/ftplugin/tex.vim	    "TeX mode"<CR>
         map <Leader>s <Plug>Vsurround
         map <Leader>S <Plug>Vsurround
 " }
-" SingleCompile {
-        "matlab
-        call SingleCompile#SetCompilerTemplate('matlab', 'matlab', 'MATLAB', 'matlab', '-nodesktop -nosplash -r "$(FILE_TITLE)$"', '')  
-"}
-
 " Fugitive {
     " Delete fugitive-created buffers
     autocmd BufReadPost fugitive://* set bufhidden=delete
