@@ -1,9 +1,6 @@
 [submodule "bundle/Aling"]
 	path = bundle/Aling
 	url = https://github.com/vim-scripts/Align.git
-[submodule "bundle/Conque-Shell"]
-	path = bundle/Conque-Shell
-	url = https://github.com/vim-scripts/Conque-Shell.git
 [submodule "bundle/fugitive"]
 	path = bundle/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
