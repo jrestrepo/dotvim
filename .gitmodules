@@ -1,45 +1,60 @@
 [submodule "bundle/Aling"]
 	path = bundle/Aling
 	url = https://github.com/vim-scripts/Align.git
+    ignore = dirty
 [submodule "bundle/fugitive"]
 	path = bundle/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
+    ignore = dirty
 [submodule "bundle/snipmate"]
 	path = bundle/snipmate
 	url = https://github.com/garbas/vim-snipmate.git
+    ignore = dirty
 [submodule "bundle/tlib"]
 	path = bundle/tlib
 	url = https://github.com/tomtom/tlib_vim.git
+    ignore = dirty
 [submodule "bundle/vim-addon-mw-utils"]
 	path = bundle/vim-addon-mw-utils
 	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+    ignore = dirty
 [submodule "bundle/supertab"]
 	path = bundle/supertab
 	url = https://github.com/ervandew/supertab.git
+    ignore = dirty
 [submodule "bundle/nerdtree"]
 	path = bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
+    ignore = dirty
 [submodule "bundle/nerdcommenter"]
 	path = bundle/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
+    ignore = dirty
 [submodule "bundle/matlab"]
 	path = bundle/matlab
 	url = https://github.com/jrestrepo/matlab.git
+    ignore = dirty
 [submodule "bundle/GenMatlabComment"]
 	path = bundle/GenMatlabComment
 	url = https://github.com/vim-scripts/GenerateMatlabFunctionComment.git
+    ignore = dirty
 [submodule "bundle/vim-matlab-fold"]
 	path = bundle/vim-matlab-fold
 	url = https://github.com/djoshea/vim-matlab-fold.git
+    ignore = dirty
 [submodule "bundle/matchit"]
 	path = bundle/matchit
 	url = https://github.com/tmhedberg/matchit.git
+    ignore = dirty
 [submodule "bundle/TextFormat"]
 	path = bundle/TextFormat
 	url = https://github.com/vim-scripts/TextFormat.git
+    ignore = dirty
 [submodule "bundle/ShowMarks"]
 	path = bundle/ShowMarks
 	url = https://github.com/vim-scripts/ShowMarks.git
+    ignore = dirty
 [submodule "bundle/surround"]
 	path = bundle/surround
 	url = https://github.com/tpope/vim-surround.git
+    ignore = dirty
