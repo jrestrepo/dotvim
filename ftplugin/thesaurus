@@ -19,5 +19,6 @@ else
     #   Definition:
     #   and all from Synonyms: to Antonyms:
     # Put a new line after Antonyms.
-    $(readlink -e $(which elinks)) -dump -no-numbering "${URL}$1"  | sed -n -e '/No results found for/ { s|^[ \t]*\(No results .*\)|\1|p ; q} ;{/Main Entry:/p ; /Definition:/p ; /Synonyms:/,/\(Antonyms:\)\|\(^$\)/p} ; /Antonyms:/ a \  '
+    $(readlink -e $(which elinks)) -dump -no-numbering "${URL}$1"  | sed -n -e '/No results found for/ { s|^[ \t]*\(No
+    results .*\)|\1|p ; q} ;{/Main Entry:/p ; /Part of Speech:/p ; /Definition:/p ; /Synonyms:/,/\(Antonyms:\)\|\(^$\)/p} ; /Antonyms:/ a \  '
 fi
