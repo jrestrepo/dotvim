@@ -65,3 +65,4 @@
 [submodule "bundle/snipmate-snippets"]
 	path = bundle/snipmate-snippets
 	url = https://jrinckoar@bitbucket.org/jrinckoar/snipmatesnippets.git
+    ignore = dirty

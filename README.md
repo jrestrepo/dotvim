@@ -10,15 +10,16 @@ Vim Config install file
     	Init plugins:
         	git submodule init
         	git submodule update
+        Add plugins 
+            git submodule add http://github.com/x-plugin.git bundle/x-plugin
+            git add .
+            git commit -m "Install x-pluging bundle as a submodule."
             Once the submodule is add "ignore=dirty" in .gitsubmodules :
                 [submodule "bundle/x-plugin"]
 	            path = bundle/x-plugin
 	            url = git://github.com/x-plugin.git
                 ignore = dirty
-        Add plugins 
-            git submodule add http://github.com/x-plugin.git bundle/x-plugin
-            git add .
-            git commit -m "Install x-pluging bundle as a submodule."
+            git push origin master    
         Remove plugins
             Delete the relevant section from the .gitmodules file.
             Stage the .gitmodules changes git add .gitmodules.
