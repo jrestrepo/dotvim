@@ -62,3 +62,6 @@
 	path = Conque-Shell
 	url = https://github.com/oplatek/Conque-Shell.git
     ignore = dirty
+[submodule "bundle/snipmate-snippets"]
+	path = bundle/snipmate-snippets
+	url = https://jrinckoar@bitbucket.org/jrinckoar/snipmatesnippets.git

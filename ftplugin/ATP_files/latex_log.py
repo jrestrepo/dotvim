@@ -29,7 +29,7 @@
 # following format:
 # WARNING_TYPE::FILE::INPUT_LINE::INPUT_COL::MESSAGE (ADDITIONAL_INFO)
 # this was intendent to be used for vim quick fix:
-# set errorformat=LaTeX\ %tarning::%f::%l::%c::%m,Citation\ %tarning::%f::%l::%c::%m,Reference\ %tarning::%f::%l::%c::%m,Package\ %tarning::%f::%l::%c::%m,hbox\ %tarning::%f::%l::%c::%m,LaTeX\ %tnfo::%f::%l::%c::%m,LaTeX\ %trror::%f::%l::%c::%m
+# setl errorformat=LaTeX\ %tarning::%f::%l::%c::%m,Citation\ %tarning::%f::%l::%c::%m,Reference\ %tarning::%f::%l::%c::%m,Package\ %tarning::%f::%l::%c::%m,hbox\ %tarning::%f::%l::%c::%m,LaTeX\ %tnfo::%f::%l::%c::%m,LaTeX\ %trror::%f::%l::%c::%m
 #
 # The fowllowing WARNING_TYPEs are available:
 # LaTeX Warning
@@ -93,14 +93,17 @@ else:
     log_to_path = None
 
 def rewrite_log(input_fname, output_fname=None, check_path=False, project_dir="", project_tmpdir="", encoding="utf8"):
-    # this function rewrites LaTeX log file (input_fname) to output_fname,
-    # changeing its format to something readable by Vim.
-    # check_path -- ATP process files in a temporary directory, with this
-    # option the files under project_tmpdir will be written using project_dir
-    # (this is for the aux file).
+    """This function rewrites LaTeX log file (input_fname) to output_fname,
+    changeing its format to something readable by Vim.
+    check_path -- ATP process files in a temporary directory, with this
+    option the files under project_tmpdir will be written using project_dir
+    (this is for the aux file).
+    """
 
     if output_fname is None:
         output_fname = os.path.splitext(input_fname)[0]+"._log"
+
+    output_dir = os.path.dirname(output_fname)
 
     try:
         if sys.version_info < (3, 0):
@@ -161,7 +164,8 @@ def rewrite_log(input_fname, output_fname=None, check_path=False, project_dir=""
         except IOError:
             print("IOError: cannot open %s file for writting" % log_to_path)
         else:
-            log_fo.write(log_stream.encode(encoding, 'ignore'))
+            # log_fo.write(log_stream.encode(encoding, 'ignore'))
+            log_fo.write("PROJECT_DIR='%s'\n" % project_dir)
             log_fo.close()
 
     # File stack
@@ -180,13 +184,13 @@ def rewrite_log(input_fname, output_fname=None, check_path=False, project_dir=""
     font_info_pat = re.compile('LaTeX Font Info: ')
     font_info = "LaTeX Font Info"
 
-    package_warning_pat = re.compile('Package (\w+) Warning: ')
+    package_warning_pat = re.compile('Package ((?:\w|\.)+) Warning: ')
     package_warning = "Package Warning"
 
     package_info_pat = re.compile('Package (\w+) Info: ')
     package_info = "Package Info"
 
-    hbox_info_pat = re.compile('(Over|Under)full \\\\hbox ')
+    hbox_info_pat = re.compile(r'(Over|Under)full \\hbox ')
     hbox_info = "hbox Warning"
 
     latex_info_pat = re.compile('LaTeX Info: ')
@@ -222,10 +226,21 @@ def rewrite_log(input_fname, output_fname=None, check_path=False, project_dir=""
             line = log_lines[line_nr-1][col_nr:]
             fname_re = re.match('([^\(\)]*\.(?:tex|sty|cls|cfg|def|aux|fd|out|bbl|blg|bcf|lof|toc|lot|ind|idx|thm|synctex\.gz|pdfsync|clo|lbx|mkii|run\.xml|spl|snm|nav|brf|mpx|ilg|maf|glo|mtc[0-9]+))', line)
             if fname_re:
-                fname = os.path.abspath(fname_re.group(1))
-                if check_path and fnmatch.fnmatch(fname, project_tmpdir+"*"):
+                fname_ = fname_re.group(1)
+                fname = os.path.basename(fname_)
+                fname_dir = os.path.dirname(fname_)
+                if check_path:
                     # ATP specific path rewritting:
-                    fname = os.path.normpath(os.path.join(project_dir, os.path.relpath(fname, project_tmpdir)))
+                    if os.path.splitext(fname)[1] in [ '.tex', '.bib' ]:
+                        if os.path.isfile(os.path.normpath(os.path.join(project_dir, fname))):
+                            fname = os.path.normpath(os.path.join(project_dir, fname))
+                        else:
+                            fname = fname_
+                    else:
+                        if os.path.isfile(os.path.normpath(os.path.join(output_dir, fname))):
+                            fname = os.path.normpath(os.path.join(output_dir, fname))
+                        else:
+                            fname = fname_
                 output_data.append(["Input File", fname, "0", "0", "Input File"])
                 file_stack.append(fname)
                 open_dict[fname]=0
@@ -253,11 +268,13 @@ def rewrite_log(input_fname, output_fname=None, check_path=False, project_dir=""
             if re.match(latex_warning_pat, line):
                 # Log Message: 'LaTeX Warning: '
                 input_line = re.search('on input line (\d+)', line)
-                warning_type = re.match('LaTeX Warning: (Citation|Reference)', line)
+                warning_type = re.match('LaTeX Warning: (Citation|Reference|Hyper reference)', line)
                 if warning_type:
                     wtype = warning_type.group(1)
                 else:
                     wtype = ""
+                if wtype == 'Hyper reference': 
+                    wtype = 'Reference'
                 msg = re.sub('\s+on input line (\d+)', '', re.sub(latex_warning_pat,'', line))
                 if msg == "":
                     msg = " "
@@ -269,7 +286,7 @@ def rewrite_log(input_fname, output_fname=None, check_path=False, project_dir=""
                 # Log Message: 'LaTeX Font Warning: '
                 input_line = re.search('on input line (\d+)', line)
                 if not input_line and line_nr < len(log_lines) and re.match('\(Font\)', log_lines[line_nr]):
-                    input_line = re.search('on input line (\d+)', line)
+                    input_line = re.search('on input line (\d+)', log_lines[line_nr])
                 if not input_line and line_nr+1 < len(log_lines) and re.match('\(Font\)', log_lines[line_nr+1]):
                     input_line = re.search('on input line (\d+)', log_lines[line_nr+1])
                 msg = re.sub(' on input line \d+', '', re.sub(font_warning_pat,'', line))
