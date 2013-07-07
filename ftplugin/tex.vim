@@ -1,14 +1,14 @@
 " Latex Config file
 "=============================================================================
 "=============================================================================
-setlocal formatoptions=1 
-setlocal noexpandtab 
-map j gj 
-map k gk
-set complete+=s
-set formatprg=par
-setlocal wrap 
-setlocal linebreak
+"setlocal formatoptions=1 
+"setlocal noexpandtab 
+"map j gj 
+"map k gk
+"set complete+=s
+"set formatprg=par
+"setlocal wrap 
+"setlocal linebreak
 "Set a left margin
 highlight! link FoldColumn Normal
 setlocal foldcolumn=5 
@@ -53,6 +53,12 @@ let b:atp_ProjectScript = 0
 let g:Tex_AutoFolding = 0
 let g:Tex_Folding = 0
 set winaltkeys=no
+
+map <Leader>ll :2Tex<CR>
+map <Leader>kk :Tex<CR>
+map <Leader>bb :Bibtex<CR>
+map <Leader>vv :View<CR>
+
 
 
 
