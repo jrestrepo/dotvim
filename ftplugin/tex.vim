@@ -58,6 +58,8 @@ map <Leader>ll :2Tex<CR>
 map <Leader>kk :Tex<CR>
 map <Leader>bb :Bibtex<CR>
 map <Leader>vv :View<CR>
+map <Leader>tt :Toc<CR>
+map <Leader>aa :Tex<CR>:Bibtex<CR>:2Tex<CR>
 
 
 
